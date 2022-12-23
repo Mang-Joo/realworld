@@ -1,17 +1,21 @@
 package realworld.mangjoo.user.adapter.`in`.dto
 
-import org.mindrot.jbcrypt.BCrypt
+import org.springframework.security.crypto.password.PasswordEncoder
 import realworld.mangjoo.user.domain.UserAccount
 
 data class UserRegisterRequestDto(
-    private val email: String,
-    private val password: String,
-    private val username: String
-){
-    fun convertDtoToDomain(): UserAccount {
-        val passwordHashed = BCrypt.hashpw(password, BCrypt.gensalt(10))
+    val email: String,
+    val password: String,
+    val username: String
+) {
+    companion object{
+        fun convertDtoToDomain(userRegisterRequestDto: UserRegisterRequestDto, passwordEncoder: PasswordEncoder): UserAccount {
 
-        return UserAccount(email, passwordHashed, username)
+            return UserAccount(
+                userRegisterRequestDto.email,
+                passwordEncoder.encode(userRegisterRequestDto.password),
+                userRegisterRequestDto.username)
+        }
     }
 }
 
