@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.*
 
-interface JwtTokenUseCase {
+interface JwtCreateTokenUseCase {
     fun createToken(email: String): String
 
 
     @Component
-    class JwtTokenProvider(
+    class JwtCreateTokenProvider(
         @Value("\${jwt.token.secretKey}") val key: String,
         @Value("\${jwt.token.time}") val time: Long
-    ) : JwtTokenUseCase {
+    ) : JwtCreateTokenUseCase {
         override fun createToken(email: String): String {
             val claims: Claims = Jwts.claims().setSubject(email)
             claims["password"] = email

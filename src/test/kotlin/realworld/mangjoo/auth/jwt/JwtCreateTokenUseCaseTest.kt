@@ -4,13 +4,14 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class JwtTokenUseCaseTest{
+class JwtCreateTokenUseCaseTest{
 
     @Test
     @DisplayName("비밀번호를 입력하면 토큰이 발행된다.")
     fun a(){
-        val createToken = JwtTokenUseCase
-            .JwtTokenProvider("key", 3000)
+        val createToken = JwtCreateTokenUseCase
+            .JwtCreateTokenProvider("key", 3000L)
+
             .createToken("hello")
 
         println(createToken)
