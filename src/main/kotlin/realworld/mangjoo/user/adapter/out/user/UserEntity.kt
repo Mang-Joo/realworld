@@ -6,8 +6,10 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
+@Table(name = "Users")
 class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +32,7 @@ class UserEntity(
                     userEntity.password,
                     userEntity.username
                 ),
+                null,
                 userEntity.bio,
                 userEntity.image,
                 userEntity.isAccountNonExpired,

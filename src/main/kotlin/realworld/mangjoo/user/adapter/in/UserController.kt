@@ -21,10 +21,16 @@ class UserController(
     @PostMapping
     fun registerUser(@RequestBody userRegisterRequestDto: UserRegisterRequestDto): ResponseEntity<UserRegisterResponse> {
 
-        val user = userRegistrationUseCase.registration(UserRegisterRequestDto.convertDtoToDomain(userRegisterRequestDto, passwordEncoder))
+        val user = userRegistrationUseCase.registration(
+            UserRegisterRequestDto.convertDtoToDomain(
+                userRegisterRequestDto,
+                passwordEncoder
+            )
+        )
 
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(user)
     }
+
 }

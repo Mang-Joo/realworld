@@ -1,7 +1,7 @@
 package realworld.mangjoo.user.port.`in`
 
 import org.springframework.stereotype.Service
-import realworld.mangjoo.auth.jwt.JwtTokenUseCase
+import realworld.mangjoo.auth.jwt.JwtCreateTokenUseCase
 import realworld.mangjoo.user.adapter.`in`.dto.UserRegisterResponse
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
@@ -13,12 +13,13 @@ interface UserRegistrationUseCase {
 
     @Service
     class UserRegistration(
-        private val jwtTokenUseCase: JwtTokenUseCase,
+        private val jwtCreateTokenUseCase: JwtCreateTokenUseCase,
         private val userRegistrationOutPort: UserRegistrationOutPort
     ) : UserRegistrationUseCase {
         override fun registration(userAccount: UserAccount): UserRegisterResponse {
             val applicationUser = User(
                 userAccount = userAccount,
+                null,
                 bio = "I work at statefarm",
                 image = null,
                 isAccountNonExpired = true,
@@ -29,7 +30,7 @@ interface UserRegistrationUseCase {
             val saveUser = userRegistrationOutPort.save(applicationUser)
 
 
-            val token = jwtTokenUseCase.createToken(saveUser.userAccount.email)
+            val token = jwtCreateTokenUseCase.createToken(saveUser.userAccount.email)
 
 
             return UserRegisterResponse.convertDomainToDto(saveUser, token)
