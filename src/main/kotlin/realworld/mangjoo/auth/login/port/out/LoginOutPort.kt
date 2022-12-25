@@ -7,12 +7,14 @@ import realworld.mangjoo.auth.login.adpater.out.LoginOutAdapter
 import realworld.mangjoo.auth.login.exception.LoginException
 import realworld.mangjoo.user.adapter.out.user.UserEntity
 import realworld.mangjoo.user.domain.User
+import javax.transaction.Transactional
 
 
-interface LoginOutPort {
+fun interface LoginOutPort {
     fun findByEmailAndPassword(loginDto: UserLoginDto): User
 
     @Component
+    @Transactional
     class LoginOutPortImpl(
         private val outAdapter: LoginOutAdapter
     ) : LoginOutPort {

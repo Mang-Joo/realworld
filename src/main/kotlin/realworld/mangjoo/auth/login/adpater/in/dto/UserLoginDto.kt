@@ -1,17 +1,21 @@
 package realworld.mangjoo.auth.login.adpater.`in`.dto
 
-import org.springframework.security.crypto.password.PasswordEncoder
 import realworld.mangjoo.user.domain.User
+import javax.validation.constraints.Email
+import javax.validation.constraints.NotNull
 
 data class UserLoginDto(
+    @field:Email(message = "Email format is incorrect.")
+    @field:NotNull(message = "Email is required.")
     val email: String,
+    @field:NotNull(message = "The password must be entered unconditionally.")
     val password: String
-){
-    fun encodePassword(passwordEncoder: PasswordEncoder): UserLoginDto =
-        UserLoginDto(
-            email,
-            passwordEncoder.encode(password)
-        )
+) {
+//    fun encodePassword(passwordEncoder: PasswordEncoder): UserLoginDto =
+//        UserLoginDto(
+//            email,
+//            passwordEncoder.encode(password)
+//        )
 }
 
 data class UserLoginResponse(

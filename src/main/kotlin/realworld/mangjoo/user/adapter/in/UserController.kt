@@ -2,7 +2,6 @@ package realworld.mangjoo.user.adapter.`in`
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,7 +14,7 @@ import realworld.mangjoo.user.port.`in`.UserRegistrationUseCase
 @RequestMapping("/api/users")
 class UserController(
     private val userRegistrationUseCase: UserRegistrationUseCase,
-    private val passwordEncoder: PasswordEncoder
+//    private val passwordEncoder: PasswordEncoder
 ) {
 
     @PostMapping
@@ -24,7 +23,7 @@ class UserController(
         val user = userRegistrationUseCase.registration(
             UserRegisterRequestDto.convertDtoToDomain(
                 userRegisterRequestDto,
-                passwordEncoder
+//                passwordEncoder
             )
         )
 

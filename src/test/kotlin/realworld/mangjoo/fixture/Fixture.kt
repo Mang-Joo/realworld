@@ -5,8 +5,8 @@ import realworld.mangjoo.auth.login.port.out.LoginOutPort
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
 
-class FakeLoginOutPort : LoginOutPort {
-    override fun findByEmailAndPassword(loginDto: UserLoginDto): User =
+class Fixture {
+    val fakeUser = LoginOutPort {
         User(
             UserAccount("mangjoo", "1234", "망주"),
             null,
@@ -17,4 +17,5 @@ class FakeLoginOutPort : LoginOutPort {
             isCredentialsNonExpired = true,
             isEnabled = true
         )
+    }
 }
