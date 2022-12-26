@@ -1,22 +1,22 @@
 package realworld.mangjoo.auth.login.adpater.`in`.dto
 
 import realworld.mangjoo.user.domain.User
-import javax.validation.constraints.Email
-import javax.validation.constraints.NotNull
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Pattern
+
+
+const val EMAIL_ADDRESS: String = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+\$"
+
+const val PASSWORD: String = "^(?=.*\\\\d)(?=.*[~`!@#\$%\\\\^&*()-])(?=.*[a-zA-Z]).{8,20}\$"
 
 data class UserLoginDto(
-    @field:Email(message = "Email format is incorrect.")
-    @field:NotNull(message = "Email is required.")
+    @field:Pattern(regexp = EMAIL_ADDRESS, message = "이메일 형식에 맞지 않습니다.")
+    @field:NotBlank(message = "빈 값은 입력할 수 없습니다.")
     val email: String,
-    @field:NotNull(message = "The password must be entered unconditionally.")
+    @field:Pattern(regexp = PASSWORD, message = "비밀번호 형식에 맞지 않습니다.")
+    @field:NotBlank(message = "빈 값은 입력할 수 없습니다.")
     val password: String
-) {
-//    fun encodePassword(passwordEncoder: PasswordEncoder): UserLoginDto =
-//        UserLoginDto(
-//            email,
-//            passwordEncoder.encode(password)
-//        )
-}
+)
 
 data class UserLoginResponse(
     val email: String,

@@ -1,15 +1,13 @@
 package realworld.mangjoo.auth.login.port.out
 
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.context.SpringBootTest
 import realworld.mangjoo.auth.login.adpater.`in`.dto.UserLoginDto
-import realworld.mangjoo.auth.login.exception.LoginException
+import realworld.mangjoo.auth.login.exception.login.LoginException
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
 import realworld.mangjoo.user.port.out.UserRegistrationOutPort
@@ -28,7 +26,7 @@ class LoginOutPortTest(
     fun test() {
         assertThatThrownBy { loginOutPort.findByEmailAndPassword(UserLoginDto("mangjoo", "1234")) }
             .isInstanceOf(LoginException::class.java)
-            .hasMessage("로그인 할 수 없습니다.")
+            .hasMessage("게정 혹은 비밀번호가 틀립니다.")
     }
 
     @Test

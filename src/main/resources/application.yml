@@ -1,4 +1,0 @@
-jwt:
-  token:
-    secretKey: 'MangJooKey'
-    time: 30 * 60 * 1000L
