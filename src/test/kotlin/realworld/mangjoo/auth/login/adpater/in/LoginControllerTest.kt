@@ -25,7 +25,7 @@ class LoginControllerTest {
     fun `로그인 테스트`() {
         val uri: String = "/api/users/login"
 
-        val userLoginDto = UserLoginDto("lsun606@naver.com", "Aaqpa#lzm13$")
+        val userLoginDto = UserLoginDto("lsun606@naver.com", "Aaqpalzm13$")
         val userDtoJson = jacksonObjectMapper().writeValueAsString(userLoginDto)
 
         mockMvc.perform(
@@ -38,36 +38,52 @@ class LoginControllerTest {
 
     }
     @Test
-    @DisplayName("이메일이 비어있으면 에러가 발생한다.")
-    fun `email empty validation exception test`() {
+    @DisplayName("이메일 에러 테스트.")
+    fun `email exception test`() {
         val uri: String = "/api/users/login"
 
-        val userDtoJson: String = "{\"email\":\" \",\"password\":\"Aaqpa#lzm13\$\"}"
+        val emailNullJson: String = "{\"email\":\" \",\"password\":\"비밀번호\$\"}"
+        val noTypeEmailJson: String = "{\"email\":\"wjwan0915\",\"password\":\"비밀번호\$\"}"
 
         mockMvc.perform(
             post(uri)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(userDtoJson)
+                .content(emailNullJson)
         )
             .andExpect(status().isBadRequest)
             .andDo(print())
 
+        mockMvc.perform(
+            post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(noTypeEmailJson)
+        )
+            .andExpect(status().isBadRequest)
+            .andDo(print())
     }
 
     @Test
-    @DisplayName("이메일 형식이 안맞으면 에러가 발생한다.")
-    fun `email form validation exception test`() {
+    @DisplayName("비밀번호 에러 테스트")
+    fun `password exception test`() {
         val uri: String = "/api/users/login"
 
-        val userDto: String = "{\"email\":\"lsun606\",\"password\":\"Aaqpa#lzm13\$\"}"
+        val nullPasswordJson: String = "{\"email\":\"wjwan0915@gmail.com\",\"password\":\"\$\"}"
+        val noTypePasswordJson: String = "{\"email\":\"wjwan0915@gmail.com\",\"password\":\"1234\$\"}"
 
         mockMvc.perform(
             post(uri)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(userDto)
+                .content(noTypePasswordJson)
         )
             .andExpect(status().isBadRequest)
             .andDo(print())
 
+        mockMvc.perform(
+            post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(nullPasswordJson)
+        )
+            .andExpect(status().isBadRequest)
+            .andDo(print())
     }
 }

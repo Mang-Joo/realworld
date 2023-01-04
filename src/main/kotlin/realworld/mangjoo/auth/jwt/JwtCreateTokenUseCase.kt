@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.*
 
-interface JwtCreateTokenUseCase {
+fun interface JwtCreateTokenUseCase {
     fun createToken(email: String): String
 
 

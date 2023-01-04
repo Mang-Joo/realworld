@@ -7,11 +7,10 @@ import org.junit.jupiter.api.Test
 class JwtCreateTokenUseCaseTest{
 
     @Test
-    @DisplayName("비밀번호를 입력하면 토큰이 발행된다.")
+    @DisplayName("로그인을 하면  토큰이 발행된다.")
     fun a(){
         val createToken = JwtCreateTokenUseCase
             .JwtCreateTokenProvider("key", 3000L)
-
             .createToken("hello")
 
         println(createToken)

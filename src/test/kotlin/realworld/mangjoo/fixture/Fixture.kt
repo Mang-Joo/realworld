@@ -1,9 +1,10 @@
 package realworld.mangjoo.fixture
 
-import realworld.mangjoo.auth.login.adpater.`in`.dto.UserLoginDto
+import realworld.mangjoo.auth.jwt.JwtCreateTokenUseCase
 import realworld.mangjoo.auth.login.port.out.LoginOutPort
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
+import realworld.mangjoo.user.port.out.UserRegistrationOutPort
 
 class Fixture {
     val fakeUser = LoginOutPort {
@@ -18,4 +19,8 @@ class Fixture {
             isEnabled = true
         )
     }
+    val fakeJwtCreateToken = JwtCreateTokenUseCase { "token" }
+
+    val fakeUserRegistrationOutPort: UserRegistrationOutPort = UserRegistrationOutPort { user: User -> user }
+
 }
