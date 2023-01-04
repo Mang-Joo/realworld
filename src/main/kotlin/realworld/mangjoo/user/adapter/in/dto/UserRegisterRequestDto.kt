@@ -14,18 +14,18 @@ data class UserRegisterRequestDto(
     val username: String
 ) {
     companion object {
-        fun convertDtoToDomain(
+        fun convertDtoToDomainByEncrypt(
             userRegisterRequestDto: UserRegisterRequestDto,
-//            passwordEncoder: PasswordEncoder
+            encryptPassword:String
         ): UserAccount {
 
             return UserAccount(
-                userRegisterRequestDto.email,
-//                passwordEncoder.encode(userRegisterRequestDto.password),
-                userRegisterRequestDto.password,
-                userRegisterRequestDto.username
+                email = userRegisterRequestDto.email,
+                passWord = encryptPassword,
+                userName = userRegisterRequestDto.username
             )
         }
     }
+
 }
 

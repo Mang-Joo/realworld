@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern
 
 const val EMAIL_ADDRESS: String = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+\$"
 
-const val PASSWORD: String = "^(?=.*\\\\d)(?=.*[~`!@#\$%\\\\^&*()-])(?=.*[a-zA-Z]).{8,20}\$"
+const val PASSWORD: String = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[\$@!%*#?&])[A-Za-z\\d\$@!%*#?&]{8,}\$"
 
 data class UserLoginDto(
     @field:Pattern(regexp = EMAIL_ADDRESS, message = "이메일 형식에 맞지 않습니다.")

@@ -1,6 +1,7 @@
 package realworld.mangjoo.user.port.`in`
 
 import org.springframework.stereotype.Service
+import realworld.mangjoo.auth.config.AES256EncryptionDecryption
 import realworld.mangjoo.auth.jwt.JwtCreateTokenUseCase
 import realworld.mangjoo.user.adapter.`in`.dto.UserRegisterResponse
 import realworld.mangjoo.user.domain.User
@@ -14,13 +15,14 @@ interface UserRegistrationUseCase {
     @Service
     class UserRegistration(
         private val jwtCreateTokenUseCase: JwtCreateTokenUseCase,
-        private val userRegistrationOutPort: UserRegistrationOutPort
+        private val userRegistrationOutPort: UserRegistrationOutPort,
+        private val aeS256EncryptionDecryption: AES256EncryptionDecryption
     ) : UserRegistrationUseCase {
         override fun registration(userAccount: UserAccount): UserRegisterResponse {
             val applicationUser = User(
                 userAccount = userAccount,
                 null,
-                bio = "I work at statefarm",
+                bio = "I work at state farm",
                 image = null,
                 isAccountNonExpired = true,
                 isAccountNoneLock = true,
@@ -28,8 +30,6 @@ interface UserRegistrationUseCase {
                 isEnabled = true
             )
             val saveUser = userRegistrationOutPort.save(applicationUser)
-
-
             val token = jwtCreateTokenUseCase.createToken(saveUser.userAccount.email)
 
 
