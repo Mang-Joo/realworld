@@ -3,23 +3,20 @@ package realworld.mangjoo.auth.config
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import realworld.mangjoo.fixture.Fixture
 
 class AES256EncryptionDecryptionTest {
 
-    private val aeS256EncryptionDecryption: AES256EncryptionDecryption = AES256EncryptionDecryption(
-        "0123456789abcdef",
-        "junnylandauthkey1234567891234512"
-    )
+    private val aeS256EncryptionDecryption: AES256EncryptionDecryption = Fixture().aeS256EncryptionDecryption
 
     private val raw: String = "mangjoo"
-    private val encrypted: String = "HPqyK6PHQYFWU2CrbVlhnw=="
+    private val encrypted: String = "wQ0o4XschBMRL8SnJg6lRg=="
 
     @Test
     @DisplayName("암호화 테스트")
     fun `encrypt test`() {
         val encryptAES256 = aeS256EncryptionDecryption.encryptAES256(raw)
-        println("encrypted = ${encrypted}")
-        assertThat(encryptAES256).isEqualTo(encryptAES256)
+        assertThat(encryptAES256).isEqualTo(encrypted)
     }
 
     @Test

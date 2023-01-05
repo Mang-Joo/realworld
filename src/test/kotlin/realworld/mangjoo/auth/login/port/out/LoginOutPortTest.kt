@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import realworld.mangjoo.auth.login.adpater.`in`.dto.UserLoginDto
+import realworld.mangjoo.auth.login.adpater.`in`.LoginController.*
 import realworld.mangjoo.auth.login.exception.login.LoginException
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
@@ -24,7 +24,7 @@ class LoginOutPortTest(
     @Test
     @DisplayName("로그인 실패 테스트")
     fun test() {
-        assertThatThrownBy { loginOutPort.findByEmailAndPassword(UserLoginDto("mangjoo", "1234")) }
+        assertThatThrownBy { loginOutPort.findByEmailAndPassword(LoginRequest("mangjoo@naver.com", "A1234567#")) }
             .isInstanceOf(LoginException::class.java)
             .hasMessage("게정 혹은 비밀번호가 틀립니다.")
     }
@@ -33,7 +33,7 @@ class LoginOutPortTest(
     @DisplayName("로그인 성공 테스트")
     fun loginSuccess() {
         val createUser = User(
-            UserAccount("mangjoo", "1234", "망주"),
+            UserAccount("mangjoo@naver.com", "A1234567#", "망주"),
             null,
             bio = "",
             image = null,
@@ -44,7 +44,7 @@ class LoginOutPortTest(
         )
         userRegistrationOutPort.save(createUser)
 
-        val findByEmailAndPassword = loginOutPort.findByEmailAndPassword(UserLoginDto("mangjoo", "1234"))
+        val findByEmailAndPassword = loginOutPort.findByEmailAndPassword(LoginRequest("mangjoo@naver.com", "A1234567#"))
         assertThat(createUser.userAccount.email).isEqualTo(findByEmailAndPassword.userAccount.email)
     }
 }

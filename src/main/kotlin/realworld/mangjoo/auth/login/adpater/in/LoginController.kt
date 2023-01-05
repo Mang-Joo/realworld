@@ -33,7 +33,7 @@ class LoginController(
     }
 
 
-    data class LoginRequest(
+    public data class LoginRequest(
         val email: String,
         val password: String,
     ) {
@@ -43,9 +43,11 @@ class LoginController(
             require(email.matches(Regex(EMAIL_ADDRESS))) { throw IllegalArgumentException("email is not valid") }
             require(password.matches(Regex(PASSWORD))) { throw IllegalArgumentException("password is not valid") }
         }
+
+        fun encryptPassword(password: String) = LoginRequest(email, password)
     }
 
-    data class LoginResponse(
+    public data class LoginResponse(
         val email: String,
         val username: String,
         val bio: String,

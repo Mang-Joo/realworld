@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import realworld.mangjoo.auth.config.AES256EncryptionDecryption
-import realworld.mangjoo.user.adapter.`in`.dto.UserRegisterRequestDto
+import realworld.mangjoo.user.adapter.`in`.dto.UserRegisterRequest
 import realworld.mangjoo.user.adapter.`in`.dto.UserRegisterResponse
 import realworld.mangjoo.user.port.`in`.UserRegistrationUseCase
 
@@ -19,8 +19,8 @@ class UserController(
 ) {
 
     @PostMapping
-    fun registerUser(@RequestBody userRegisterRequestDto: UserRegisterRequestDto): ResponseEntity<UserRegisterResponse> {
-        val userAccount = userRegisterRequestDto.encrpytPassword(aeS256EncryptionDecryption.encryptAES256(userRegisterRequestDto.password))
+    fun registerUser(@RequestBody userRegisterRequest: UserRegisterRequest): ResponseEntity<UserRegisterResponse> {
+        val userAccount = userRegisterRequest.encryptPassword(aeS256EncryptionDecryption.encryptAES256(userRegisterRequest.password))
         val user = userRegistrationUseCase.registration(userAccount)
         return ResponseEntity
             .status(HttpStatus.CREATED)
