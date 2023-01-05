@@ -1,6 +1,6 @@
 package realworld.mangjoo.fixture
 
-import realworld.mangjoo.auth.config.AES256EncryptionDecryption
+import realworld.mangjoo.auth.config.AES256Encoder
 import realworld.mangjoo.auth.jwt.JwtCreateTokenUseCase
 import realworld.mangjoo.auth.login.port.out.LoginOutPort
 import realworld.mangjoo.user.domain.User
@@ -24,7 +24,7 @@ class Fixture {
 
     val fakeUserRegistrationOutPort: UserRegistrationOutPort = UserRegistrationOutPort { user: User -> user }
 
-    val aeS256EncryptionDecryption: AES256EncryptionDecryption = AES256EncryptionDecryption(
+    val aeS256Encoder: AES256Encoder = AES256Encoder(
         "0123456789abcdef",
         "junnylandauthkey1234567891234512"
     )

@@ -16,11 +16,10 @@ import javax.crypto.spec.SecretKeySpec
 const val PADDING: String = "AES/CBC/PKCS5Padding"
 
 @Component
-class AES256EncryptionDecryption(
+class AES256Encoder(
     @Value("\${aes.iv}") private val iv: String,
     @Value("\${aes.auth}") private val auth: String
 ) {
-    private val log = getLogger("Login")!!
     private val keySpec: SecretKeySpec get() = SecretKeySpec(auth.toByteArray(), "AES")
     private val ivSpec: IvParameterSpec get() = IvParameterSpec(iv.toByteArray())
 
