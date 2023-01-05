@@ -20,7 +20,7 @@ class UserController(
 
     @PostMapping
     fun registerUser(@RequestBody userRegisterRequestDto: UserRegisterRequestDto): ResponseEntity<UserRegisterResponse> {
-        val userAccount = UserRegisterRequestDto.convertDtoToDomainByEncrypt(userRegisterRequestDto, aeS256EncryptionDecryption.encryptAES256(userRegisterRequestDto.password))
+        val userAccount = userRegisterRequestDto.encrpytPassword(aeS256EncryptionDecryption.encryptAES256(userRegisterRequestDto.password))
         val user = userRegistrationUseCase.registration(userAccount)
         return ResponseEntity
             .status(HttpStatus.CREATED)

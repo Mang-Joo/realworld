@@ -16,7 +16,6 @@ fun interface UserRegistrationOutPort {
             return UserEntity.convertEntityToDomain(userEntity)
         }
 
-
     }
 
 }

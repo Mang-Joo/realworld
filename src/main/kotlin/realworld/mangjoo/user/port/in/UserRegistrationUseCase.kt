@@ -33,7 +33,7 @@ interface UserRegistrationUseCase {
             val token = jwtCreateTokenUseCase.createToken(saveUser.userAccount.email)
 
 
-            return UserRegisterResponse.convertDomainToDto(saveUser, token)
+            return UserRegisterResponse(saveUser, token)
         }
     }
 }
