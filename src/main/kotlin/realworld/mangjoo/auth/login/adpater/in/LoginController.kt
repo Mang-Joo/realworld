@@ -11,8 +11,7 @@ import realworld.mangjoo.user.domain.User
 import javax.validation.Valid
 
 
-const val EMAIL_ADDRESS: String = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+\$"
-const val PASSWORD: String = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[\$@!%*#?&])[A-Za-z\\d\$@!%*#?&]{8,}\$"
+const val EMAIL_ADDRESS: String = "^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+\$"
 
 @RestController
 @RequestMapping("/api/users")
@@ -22,15 +21,11 @@ class LoginController(
     val log = LoggerFactory.getLogger("Login")!!
 
     @PostMapping("/login")
-    fun loginUser(@Valid @RequestBody userLoginRequestDto: LoginRequest): ResponseEntity<LoginResponse> {
-        log.info("login : {}", userLoginRequestDto)
-        val loginUser: User = loginUseCase.loginUser(userLoginRequestDto)
-        val userResponse = LoginResponse(loginUser)
-        return ResponseEntity
-            .status(200)
-            .header("Token", loginUser.token)
-            .body(userResponse)
-    }
+    fun loginUser(@Valid @RequestBody userLoginRequestDto: LoginRequest): ResponseEntity<LoginResponse> =
+        loginUseCase
+            .loginUser(userLoginRequestDto)
+            .also { log.info("login : {}", userLoginRequestDto.email) }
+            .let { ResponseEntity.status(200).body(it) }
 
 
     data class LoginRequest(
@@ -41,7 +36,7 @@ class LoginController(
             require(email.isNotBlank()) { throw IllegalArgumentException("email is blank") }
             require(password.isNotBlank()) { throw IllegalArgumentException("password is blank") }
             require(email.matches(Regex(EMAIL_ADDRESS))) { throw IllegalArgumentException("email is not valid") }
-            require(password.matches(Regex(PASSWORD))) { throw IllegalArgumentException("password is not valid") }
+//            require(password.matches(Regex(PASSWORD))) { throw IllegalArgumentException("password is not valid") }
         }
 
         fun encryptPassword(password: String) = LoginRequest(email, password)
@@ -49,12 +44,14 @@ class LoginController(
 
     data class LoginResponse(
         val email: String,
+        val token: String,
         val username: String,
         val bio: String,
         val image: String?,
     ) {
-        constructor(user: User) : this(
+        constructor(user: User, token: String) : this(
             user.userAccount.email,
+            token,
             user.userAccount.userName,
             user.bio,
             user.image,

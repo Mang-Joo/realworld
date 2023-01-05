@@ -4,11 +4,11 @@ import org.springframework.stereotype.Service
 import realworld.mangjoo.auth.config.AES256Encoder
 import realworld.mangjoo.auth.jwt.JwtCreateTokenUseCase
 import realworld.mangjoo.auth.login.adpater.`in`.LoginController.LoginRequest
+import realworld.mangjoo.auth.login.adpater.`in`.LoginController.LoginResponse
 import realworld.mangjoo.auth.login.port.out.LoginOutPort
-import realworld.mangjoo.user.domain.User
 
 interface LoginUseCase {
-    fun loginUser(userLoginDto: LoginRequest): User
+    fun loginUser(userLoginDto: LoginRequest): LoginResponse
 
     @Service
     class LoginUseCaseImpl(
@@ -16,10 +16,9 @@ interface LoginUseCase {
         private val jwtCreateTokenUseCase: JwtCreateTokenUseCase,
         private val aeS256Encoder: AES256Encoder
     ) : LoginUseCase {
-        override fun loginUser(userLoginDto: LoginRequest): User {
+        override fun loginUser(userLoginDto: LoginRequest): LoginResponse {
             val user = loginOutPort.findByEmailAndPassword(userLoginDto.encryptPassword(aeS256Encoder.encryptAES256(userLoginDto.password)))
-            val createToken = jwtCreateTokenUseCase.createToken(user.userAccount.email)
-            return user.createToken(createToken)
+            return LoginResponse(user, jwtCreateTokenUseCase.createToken(user.userAccount.email))
         }
     }
 }

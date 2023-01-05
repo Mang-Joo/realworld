@@ -20,7 +20,7 @@ class UserController(
 
     @PostMapping
     fun registerUser(@RequestBody userRegisterRequest: UserRegisterRequest): ResponseEntity<UserRegisterResponse> =
-        userRegistrationUseCase.registration(userRegisterRequest.encryptPassword(aeS256Encoder.encryptAES256(userRegisterRequest.password)))
+        userRegistrationUseCase.registration(userRegisterRequest.encryptPasswordToUserAccount(aeS256Encoder.encryptAES256(userRegisterRequest.password)))
             .let {
                 ResponseEntity
                     .status(HttpStatus.CREATED)

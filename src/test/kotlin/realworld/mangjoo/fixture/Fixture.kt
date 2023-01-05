@@ -11,7 +11,6 @@ class Fixture {
     val fakeUser = LoginOutPort {
         User(
             UserAccount("mangjoo@naver.com", "A1234567#", "망주"),
-            null,
             bio = "",
             image = null,
             isAccountNonExpired = true,

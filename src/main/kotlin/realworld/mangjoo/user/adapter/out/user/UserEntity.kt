@@ -1,19 +1,20 @@
 package realworld.mangjoo.user.adapter.out.user
 
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.Where
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
-@Table(name = "Users")
+@Table(name = "userTable")
+@SQLDelete(sql = "UPDATE userTable SET is_enabled = false WHERE id = ?")
+@Where(clause = "is_enabled=true")
 class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
+    @Column(unique = true)
     var email: String,
     var password: String,
     var username: String,
@@ -32,7 +33,6 @@ class UserEntity(
                     userEntity.password,
                     userEntity.username
                 ),
-                null,
                 userEntity.bio,
                 userEntity.image,
                 userEntity.isAccountNonExpired,

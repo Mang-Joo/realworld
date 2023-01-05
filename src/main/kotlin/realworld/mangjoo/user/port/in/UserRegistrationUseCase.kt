@@ -16,19 +16,17 @@ interface UserRegistrationUseCase {
         private val jwtCreateTokenUseCase: JwtCreateTokenUseCase,
         private val userRegistrationOutPort: UserRegistrationOutPort
     ) : UserRegistrationUseCase {
-        override fun registration(userAccount: UserAccount): UserRegisterResponse {
-            val saveUser = User(
+        override fun registration(userAccount: UserAccount): UserRegisterResponse =
+            User(
                 userAccount = userAccount,
-                null,
                 bio = "I work at state farm",
                 image = null,
                 isAccountNonExpired = true,
                 isAccountNoneLock = true,
                 isCredentialsNonExpired = true,
                 isEnabled = true
-            ).let { userRegistrationOutPort.save(it) }
-
-            return UserRegisterResponse(saveUser, jwtCreateTokenUseCase.createToken(saveUser.userAccount.email))
-        }
+            )
+                .let { userRegistrationOutPort.save(it) }
+                .let { UserRegisterResponse(it, jwtCreateTokenUseCase.createToken(it.userAccount.email)) }
     }
 }

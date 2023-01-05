@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import realworld.mangjoo.auth.config.AES256Encoder
 import realworld.mangjoo.auth.login.adpater.`in`.LoginController.*
 import realworld.mangjoo.auth.login.exception.login.LoginException
 import realworld.mangjoo.user.domain.User
@@ -18,7 +19,10 @@ class LoginOutPortTest(
     val loginOutPort: LoginOutPort,
 
     @Autowired
-    val userRegistrationOutPort: UserRegistrationOutPort
+    val userRegistrationOutPort: UserRegistrationOutPort,
+    @Autowired
+    val aeS256Encoder: AES256Encoder
+
 ) {
 
     @Test
@@ -33,8 +37,7 @@ class LoginOutPortTest(
     @DisplayName("로그인 성공 테스트")
     fun loginSuccess() {
         val createUser = User(
-            UserAccount("mangjoo@naver.com", "A1234567#", "망주"),
-            null,
+            UserAccount("mangjoo@naver.com", aeS256Encoder.encryptAES256("A1234567#"), "망주"),
             bio = "",
             image = null,
             isAccountNonExpired = true,
@@ -44,7 +47,7 @@ class LoginOutPortTest(
         )
         userRegistrationOutPort.save(createUser)
 
-        val findByEmailAndPassword = loginOutPort.findByEmailAndPassword(LoginRequest("mangjoo@naver.com", "A1234567#"))
+        val findByEmailAndPassword = loginOutPort.findByEmailAndPassword(LoginRequest("mangjoo@naver.com", aeS256Encoder.encryptAES256("A1234567#")))
         assertThat(createUser.userAccount.email).isEqualTo(findByEmailAndPassword.userAccount.email)
     }
 }
