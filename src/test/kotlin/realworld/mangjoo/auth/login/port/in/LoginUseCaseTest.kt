@@ -7,8 +7,6 @@ import realworld.mangjoo.auth.login.adpater.`in`.LoginController.LoginRequest
 import realworld.mangjoo.auth.login.port.`in`.LoginUseCase.LoginUseCaseImpl
 import realworld.mangjoo.fixture.Fixture
 
-const val EMAIL_ADDRESS: String = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+\$"
-const val PASSWORD: String = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[\$@!%*#?&])[A-Za-z\\d\$@!%*#?&]{8,}\$"
 class LoginUseCaseTest {
     private val loginUseCase: LoginUseCase = LoginUseCaseImpl(
         loginOutPort = Fixture().fakeUser,
