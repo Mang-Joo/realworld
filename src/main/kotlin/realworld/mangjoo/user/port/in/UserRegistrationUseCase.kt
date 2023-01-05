@@ -19,7 +19,7 @@ interface UserRegistrationUseCase {
         private val aeS256EncryptionDecryption: AES256EncryptionDecryption
     ) : UserRegistrationUseCase {
         override fun registration(userAccount: UserAccount): UserRegisterResponse {
-            val applicationUser = User(
+            val saveUser = User(
                 userAccount = userAccount,
                 null,
                 bio = "I work at state farm",
@@ -28,12 +28,9 @@ interface UserRegistrationUseCase {
                 isAccountNoneLock = true,
                 isCredentialsNonExpired = true,
                 isEnabled = true
-            )
-            val saveUser = userRegistrationOutPort.save(applicationUser)
-            val token = jwtCreateTokenUseCase.createToken(saveUser.userAccount.email)
+            ).let { userRegistrationOutPort.save(it) }
 
-
-            return UserRegisterResponse(saveUser, token)
+            return UserRegisterResponse(saveUser, jwtCreateTokenUseCase.createToken(saveUser.userAccount.email))
         }
     }
 }

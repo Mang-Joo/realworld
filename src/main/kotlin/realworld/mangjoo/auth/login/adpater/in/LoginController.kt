@@ -33,7 +33,7 @@ class LoginController(
     }
 
 
-    public data class LoginRequest(
+    data class LoginRequest(
         val email: String,
         val password: String,
     ) {
@@ -47,7 +47,7 @@ class LoginController(
         fun encryptPassword(password: String) = LoginRequest(email, password)
     }
 
-    public data class LoginResponse(
+    data class LoginResponse(
         val email: String,
         val username: String,
         val bio: String,

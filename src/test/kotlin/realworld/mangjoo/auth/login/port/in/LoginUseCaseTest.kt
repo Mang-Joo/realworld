@@ -17,7 +17,6 @@ class LoginUseCaseTest {
     @Test
     fun loginTest() {
         val userLoginDto = LoginRequest("mangjoo@naver.com", "A1234567#")
-
         val loginUser = loginUseCase.loginUser(userLoginDto)
         assertThat(userLoginDto.email).isEqualTo(loginUser.userAccount.email)
         assertThat(userLoginDto.password).isEqualTo(loginUser.userAccount.passWord)

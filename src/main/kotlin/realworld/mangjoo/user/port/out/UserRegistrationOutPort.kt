@@ -11,11 +11,10 @@ fun interface UserRegistrationOutPort {
     @Component
     class UserRegistrationOut(private val userRegistrationOutAdapter: UserRegistrationOutAdapter) :
         UserRegistrationOutPort {
-        override fun save(user: User): User {
-            val userEntity = userRegistrationOutAdapter.save(UserEntity.convertDomainToEntity(user))
-            return UserEntity.convertEntityToDomain(userEntity)
-        }
-
+        override fun save(user: User): User =
+            userRegistrationOutAdapter
+                .save(UserEntity.convertDomainToEntity(user))
+                .let { UserEntity.convertEntityToDomain(it) }
     }
 
 }

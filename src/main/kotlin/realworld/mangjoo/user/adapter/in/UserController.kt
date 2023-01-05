@@ -19,12 +19,11 @@ class UserController(
 ) {
 
     @PostMapping
-    fun registerUser(@RequestBody userRegisterRequest: UserRegisterRequest): ResponseEntity<UserRegisterResponse> {
-        val userAccount = userRegisterRequest.encryptPassword(aeS256EncryptionDecryption.encryptAES256(userRegisterRequest.password))
-        val user = userRegistrationUseCase.registration(userAccount)
-        return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(user)
-    }
-
+    fun registerUser(@RequestBody userRegisterRequest: UserRegisterRequest): ResponseEntity<UserRegisterResponse> =
+        userRegistrationUseCase.registration(userRegisterRequest.encryptPassword(aeS256EncryptionDecryption.encryptAES256(userRegisterRequest.password)))
+            .let {
+                ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(it)
+            }
 }
