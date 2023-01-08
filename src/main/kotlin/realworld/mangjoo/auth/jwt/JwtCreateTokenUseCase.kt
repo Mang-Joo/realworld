@@ -1,6 +1,5 @@
 package realworld.mangjoo.auth.jwt
 
-import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
@@ -17,11 +16,15 @@ fun interface JwtCreateTokenUseCase {
         @Value("\${jwt.token.time}") val time: Long
     ) : JwtCreateTokenUseCase {
         override fun createToken(email: String): String {
-            val claims: Claims = Jwts.claims().setSubject(email)
-            claims["password"] = email
+            val claims = Jwts.claims()
+                .also { it.subject = email }
+                .also { it["password"] = email }
+
             val header = Jwts.header()
-            header["key"] = email
+                .also { it["key"] = email }
+
             val now = Date()
+
             return Jwts.builder()
                 .setHeader(header)
                 .setClaims(claims)

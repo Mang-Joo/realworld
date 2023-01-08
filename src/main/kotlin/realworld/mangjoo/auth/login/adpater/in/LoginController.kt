@@ -21,7 +21,7 @@ class LoginController(
     val log = LoggerFactory.getLogger("Login")!!
 
     @PostMapping("/login")
-    fun loginUser(@Valid @RequestBody userLoginRequestDto: LoginRequest): ResponseEntity<LoginResponse> =
+    fun loginUser(@Valid @RequestBody userLoginRequestDto: LoginRequest): ResponseEntity<UserResponse> =
         loginUseCase
             .loginUser(userLoginRequestDto)
             .also { log.info("login : {}", userLoginRequestDto.email) }
@@ -42,7 +42,7 @@ class LoginController(
         fun encryptPassword(password: String) = LoginRequest(email, password)
     }
 
-    data class LoginResponse(
+    data class UserResponse(
         val email: String,
         val token: String,
         val username: String,
