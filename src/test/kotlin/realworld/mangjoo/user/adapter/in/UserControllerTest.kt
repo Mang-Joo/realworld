@@ -1,6 +1,7 @@
 package realworld.mangjoo.user.adapter.`in`
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -21,6 +22,35 @@ class UserControllerTest {
 
     @Test
     fun `user register test`() {
+        val uri = "/api/users"
+
+        val userRegisterRequest = UserRegisterRequest(
+            "wjwan0915@gmail.com",
+            "A1234567#",
+            "김완주"
+        )
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(userRegisterRequest))
+        )
+            .andExpect(MockMvcResultMatchers.status().isCreated)
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn()
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/api/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(LoginController.LoginRequest("wjwan0915@gmail.com", "A1234567#")))
+        ).andExpect(MockMvcResultMatchers.status().isOk)
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn()
+    }
+
+    @Test
+    @DisplayName("토큰으로 유저 정보 가져오는 테스트")
+    fun `get user test`() {
         val uri = "/api/users"
 
         val userRegisterRequest = UserRegisterRequest(

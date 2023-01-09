@@ -11,7 +11,7 @@ import realworld.mangjoo.auth.login.adpater.`in`.LoginController.*
 import realworld.mangjoo.auth.login.exception.login.LoginException
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
-import realworld.mangjoo.user.port.out.UserRegistrationOutPort
+import realworld.mangjoo.user.port.out.RegistUserOutPort
 
 @SpringBootTest
 class LoginOutPortTest(
@@ -19,7 +19,7 @@ class LoginOutPortTest(
     val loginOutPort: LoginOutPort,
 
     @Autowired
-    val userRegistrationOutPort: UserRegistrationOutPort,
+    val registUserOutPort: RegistUserOutPort,
     @Autowired
     val aeS256Encoder: AES256Encoder
 
@@ -45,7 +45,7 @@ class LoginOutPortTest(
             isCredentialsNonExpired = true,
             isEnabled = true
         )
-        userRegistrationOutPort.save(createUser)
+        registUserOutPort.save(createUser)
 
         val findByEmailAndPassword = loginOutPort.findByEmailAndPassword(LoginRequest("mangjoo@naver.com", aeS256Encoder.encryptAES256("A1234567#")))
         assertThat(createUser.userAccount.email).isEqualTo(findByEmailAndPassword.userAccount.email)

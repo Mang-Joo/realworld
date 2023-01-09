@@ -1,18 +1,20 @@
 package realworld.mangjoo.user.port.out
 
 import org.springframework.stereotype.Component
-import realworld.mangjoo.user.adapter.out.UserRegistrationOutAdapter
+import realworld.mangjoo.user.adapter.out.UserOutAdapter
 import realworld.mangjoo.user.adapter.out.user.UserEntity
 import realworld.mangjoo.user.domain.User
 
-fun interface UserRegistrationOutPort {
+fun interface RegistUserOutPort {
     fun save(user: User): User
 
     @Component
-    class UserRegistrationOut(private val userRegistrationOutAdapter: UserRegistrationOutAdapter) :
-        UserRegistrationOutPort {
+    class RegistUserOut(
+        private val userOutAdapter: UserOutAdapter,
+    ) :
+        RegistUserOutPort {
         override fun save(user: User): User =
-            userRegistrationOutAdapter
+            userOutAdapter
                 .save(UserEntity.convertDomainToEntity(user))
                 .let { UserEntity.convertEntityToDomain(it) }
     }

@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test
 import realworld.mangjoo.fixture.Fixture
 import realworld.mangjoo.user.domain.UserAccount
 
-class UserRegistrationUseCaseTest {
+class RegistUserUseCaseTest {
 
     @Test
     @DisplayName("유저 회원가입 테스트")
     fun `user register test`() {
-        val userRegistrationUseCase: UserRegistrationUseCase = UserRegistrationUseCase.UserRegistration(
+        val registUserUseCase: RegistUserUseCase = RegistUserUseCase.RegistUser(
             Fixture().fakeJwtCreateToken,
-            Fixture().fakeUserRegistrationOutPort
+            Fixture().fakeRegistUserOutPort
         )
         val userAccount = UserAccount("lsun606@naver.com", "Abcdefg123!", "김완주")
-        val userRegisterResponse = userRegistrationUseCase.registration(userAccount)
+        val userRegisterResponse = registUserUseCase.registration(userAccount)
 
         assertThat(userRegisterResponse.email).isEqualTo(userAccount.email)
         assertThat(userRegisterResponse.username).isEqualTo(userAccount.userName)

@@ -5,17 +5,17 @@ import realworld.mangjoo.auth.jwt.JwtCreateTokenUseCase
 import realworld.mangjoo.user.adapter.`in`.dto.UserRegisterResponse
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
-import realworld.mangjoo.user.port.out.UserRegistrationOutPort
+import realworld.mangjoo.user.port.out.RegistUserOutPort
 
-interface UserRegistrationUseCase {
+interface RegistUserUseCase {
     fun registration(userAccount: UserAccount): UserRegisterResponse
 
 
     @Service
-    class UserRegistration(
+    class RegistUser(
         private val jwtCreateTokenUseCase: JwtCreateTokenUseCase,
-        private val userRegistrationOutPort: UserRegistrationOutPort
-    ) : UserRegistrationUseCase {
+        private val registUserOutPort: RegistUserOutPort
+    ) : RegistUserUseCase {
         override fun registration(userAccount: UserAccount): UserRegisterResponse =
             User(
                 userAccount = userAccount,
@@ -26,7 +26,7 @@ interface UserRegistrationUseCase {
                 isCredentialsNonExpired = true,
                 isEnabled = true
             )
-                .let { userRegistrationOutPort.save(it) }
+                .let { registUserOutPort.save(it) }
                 .let { UserRegisterResponse(it, jwtCreateTokenUseCase.createToken(it.userAccount.email)) }
     }
 }
