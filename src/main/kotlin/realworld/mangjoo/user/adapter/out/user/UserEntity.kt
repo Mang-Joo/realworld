@@ -1,5 +1,7 @@
 package realworld.mangjoo.user.adapter.out.user
 
+import org.hibernate.annotations.DynamicInsert
+import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.Where
 import realworld.mangjoo.user.domain.User
@@ -10,6 +12,8 @@ import javax.persistence.*
 @Table(name = "userTable")
 @SQLDelete(sql = "UPDATE userTable SET is_enabled = false WHERE id = ?")
 @Where(clause = "is_enabled=true")
+@DynamicInsert
+@DynamicUpdate
 class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
