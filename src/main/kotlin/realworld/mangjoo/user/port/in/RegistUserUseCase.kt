@@ -16,16 +16,7 @@ interface RegistUserUseCase {
         private val jwtCreateTokenUseCase: JwtCreateTokenUseCase,
         private val registUserOutPort: RegistUserOutPort
     ) : RegistUserUseCase {
-        override fun registration(userAccount: UserAccount): UserRegisterResponse =
-            User(
-                userAccount = userAccount,
-                bio = "I work at state farm",
-                image = null,
-                isAccountNonExpired = true,
-                isAccountNoneLock = true,
-                isCredentialsNonExpired = true,
-                isEnabled = true
-            )
+        override fun registration(userAccount: UserAccount): UserRegisterResponse = User.of(userAccount, "I work at state farm")
                 .let { registUserOutPort.save(it) }
                 .let { UserRegisterResponse(it, jwtCreateTokenUseCase.createToken(it.userAccount.email)) }
     }

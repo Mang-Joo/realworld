@@ -4,10 +4,10 @@ data class User(
     val userAccount: UserAccount,
     val bio: String,
     val image: String?,
-    val isAccountNonExpired: Boolean,
-    val isAccountNoneLock: Boolean,
-    val isCredentialsNonExpired: Boolean,
-    val isEnabled: Boolean,
+    val isAccountNonExpired: Boolean = true,
+    val isAccountNoneLock: Boolean = true,
+    val isCredentialsNonExpired: Boolean = true,
+    val isEnabled: Boolean = true,
 ) {
     constructor(userAccount: UserAccount, bio: String, image: String?) : this(
         userAccount = userAccount,
@@ -35,6 +35,12 @@ data class User(
 
     fun email() = userAccount.email
 
+    companion object{
+        fun of(userAccount: UserAccount, bio: String): User {
+            return User(userAccount,bio, null)
+        }
+
+    }
 }
 
 
