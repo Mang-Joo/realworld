@@ -5,9 +5,9 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import realworld.mangjoo.fixture.Fixture
 
-class AES256EncoderTest {
+class PassWordEncoderTest {
 
-    private val aeS256Encoder: AES256Encoder = Fixture().aeS256Encoder
+    private val aeS256Encoder: PassWordEncoder = Fixture().aeS256Encoder
 
     private val raw: String = "mangjoo"
     private val encrypted: String = "wQ0o4XschBMRL8SnJg6lRg=="

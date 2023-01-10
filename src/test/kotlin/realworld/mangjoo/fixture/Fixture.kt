@@ -1,7 +1,6 @@
 package realworld.mangjoo.fixture
 
-import realworld.mangjoo.auth.config.AES256Encoder
-import realworld.mangjoo.auth.jwt.CheckJwtTokenUseCase
+import realworld.mangjoo.auth.config.PassWordEncoder
 import realworld.mangjoo.auth.jwt.JwtCreateTokenUseCase
 import realworld.mangjoo.auth.login.port.out.LoginOutPort
 import realworld.mangjoo.user.domain.User
@@ -25,7 +24,7 @@ class Fixture {
     val loginEmail:String = "wjwan0915@gmail.com"
 
     val fakeJwtCreateToken = JwtCreateTokenUseCase { "token" }
-    val fakeCheckJwtToken = CheckJwtTokenUseCase { "wjwan0915@gmail.com" }
+//    val fakeCheckJwtToken = CheckJwtTokenUseCase { "wjwan0915@gmail.com" }
 
     val fakeRegistUserOutPort: RegistUserOutPort = RegistUserOutPort { user: User -> user }
 
@@ -41,7 +40,7 @@ class Fixture {
         )
     }
 
-    val aeS256Encoder: AES256Encoder = AES256Encoder(
+    val aeS256Encoder: PassWordEncoder = PassWordEncoder(
         "0123456789abcdef",
         "junnylandauthkey1234567891234512"
     )

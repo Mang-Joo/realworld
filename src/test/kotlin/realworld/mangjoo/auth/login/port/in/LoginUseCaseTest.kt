@@ -12,7 +12,7 @@ class LoginUseCaseTest {
     private val loginUseCase: LoginUseCase = LoginUseCaseImpl(
         loginOutPort = Fixture().fakeUser,
         jwtCreateTokenUseCase = JwtCreateTokenProvider("mangjoo", 1000),
-        aeS256Encoder = Fixture().aeS256Encoder
+        passWordEncoder = Fixture().aeS256Encoder
     )
 
     @Test

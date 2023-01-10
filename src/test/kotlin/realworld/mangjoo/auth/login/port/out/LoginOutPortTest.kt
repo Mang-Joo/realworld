@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import realworld.mangjoo.auth.config.AES256Encoder
+import realworld.mangjoo.auth.config.PassWordEncoder
 import realworld.mangjoo.auth.login.adpater.`in`.LoginController.*
 import realworld.mangjoo.auth.login.exception.login.LoginException
 import realworld.mangjoo.user.domain.User
@@ -21,7 +21,7 @@ class LoginOutPortTest(
     @Autowired
     val registUserOutPort: RegistUserOutPort,
     @Autowired
-    val aeS256Encoder: AES256Encoder
+    val aeS256Encoder: PassWordEncoder
 
 ) {
 
