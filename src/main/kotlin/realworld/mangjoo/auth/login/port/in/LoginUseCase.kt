@@ -16,9 +16,8 @@ interface LoginUseCase {
         private val jwtCreateTokenUseCase: JwtCreateTokenUseCase,
         private val passWordEncoder: PassWordEncoder
     ) : LoginUseCase {
-        override fun loginUser(userLoginDto: LoginRequest): UserResponse {
-            val user = loginOutPort.findByEmailAndPassword(userLoginDto.encryptPassword(passWordEncoder.encryptAES256(userLoginDto.password)))
-            return UserResponse(user, jwtCreateTokenUseCase.createToken(user.userAccount.email))
-        }
+        override fun loginUser(userLoginDto: LoginRequest): UserResponse = loginOutPort
+                .findByEmailAndPassword(userLoginDto.encryptPassword(passWordEncoder.encryptAES256(userLoginDto.password)))
+                .let { UserResponse(it, jwtCreateTokenUseCase.createToken(it.userAccount.email)) }
     }
 }
