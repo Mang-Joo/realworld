@@ -20,4 +20,9 @@ interface LoginUseCase {
                 .findByEmailAndPassword(userLoginDto.encryptPassword(passWordEncoder.encryptAES256(userLoginDto.password)))
                 .let { UserResponse(it, jwtCreateTokenUseCase.createToken(it.userAccount.email)) }
     }
+
+    data class LoginUseCaseRequest(
+        val email: String,
+        val password: String,
+    )
 }

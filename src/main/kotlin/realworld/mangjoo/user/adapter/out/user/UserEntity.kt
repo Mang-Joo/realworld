@@ -4,9 +4,14 @@ import org.hibernate.annotations.DynamicInsert
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.Where
+import realworld.mangjoo.user.adapter.out.BaseTimeEntity
 import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
-import javax.persistence.*
+import java.util.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
 @Table(name = "userTable")
@@ -16,8 +21,7 @@ import javax.persistence.*
 @DynamicUpdate
 class UserEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    var id: UUID,
     @Column(unique = true)
     var email: String,
     var password: String,
@@ -28,10 +32,11 @@ class UserEntity(
     var isAccountNoneLock: Boolean,
     var isCredentialsNonExpired: Boolean,
     var isEnabled: Boolean,
-) {
+): BaseTimeEntity() {
     companion object {
         fun convertEntityToDomain(userEntity: UserEntity): User {
             return User(
+                userEntity.id,
                 UserAccount(
                     userEntity.email,
                     userEntity.password,
@@ -48,7 +53,7 @@ class UserEntity(
 
         fun convertDomainToEntity(user: User): UserEntity {
             return UserEntity(
-                null,
+                user.userID,
                 user.userAccount.email,
                 user.userAccount.passWord,
                 user.userAccount.userName,

@@ -1,6 +1,9 @@
 package realworld.mangjoo.user.domain
 
+import java.util.*
+
 data class User(
+    val userID: UUID,
     val userAccount: UserAccount,
     val bio: String,
     val image: String?,
@@ -10,6 +13,7 @@ data class User(
     val isEnabled: Boolean = true,
 ) {
     constructor(userAccount: UserAccount, bio: String, image: String?) : this(
+        userID = UUID.randomUUID(),
         userAccount = userAccount,
         bio = bio,
         image = image,
@@ -24,6 +28,7 @@ data class User(
         bio: String,
         image: String
     ) = User(
+        userID,
         userAccount,
         bio,
         image,

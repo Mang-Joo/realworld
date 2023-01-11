@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import realworld.mangjoo.auth.login.port.`in`.LoginUseCase
+import realworld.mangjoo.auth.login.port.`in`.LoginUseCase.*
+import realworld.mangjoo.user.adapter.`in`.dto.PASSWORD
 import realworld.mangjoo.user.domain.User
 import javax.validation.Valid
 
@@ -36,10 +38,10 @@ class LoginController(
             require(email.isNotBlank()) { throw IllegalArgumentException("email is blank") }
             require(password.isNotBlank()) { throw IllegalArgumentException("password is blank") }
             require(email.matches(Regex(EMAIL_ADDRESS))) { throw IllegalArgumentException("email is not valid") }
-//            require(password.matches(Regex(PASSWORD))) { throw IllegalArgumentException("password is not valid") }
+            require(password.matches(Regex(PASSWORD))) { throw IllegalArgumentException("password is not valid") }
         }
 
-        fun encryptPassword(password: String) = LoginRequest(email, password)
+        fun encryptPassword(password: String) = LoginUseCaseRequest(email, password)
     }
 
     data class UserResponse(

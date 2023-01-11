@@ -14,9 +14,8 @@ fun interface GetUserInfoUseCase {
         private val findUserOutPort: FindUserOutPort
     ) : GetUserInfoUseCase {
         override fun getUserInfo(token: String): User =
-            checkJwtTokenUseCase.checkToken(token)
+            checkJwtTokenUseCase
+                .checkToken(token)
                 .let { findUserOutPort.findByEmail(email = it) }
-
-
     }
 }

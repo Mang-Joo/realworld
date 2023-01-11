@@ -7,10 +7,12 @@ import realworld.mangjoo.user.domain.User
 import realworld.mangjoo.user.domain.UserAccount
 import realworld.mangjoo.user.port.out.FindUserOutPort
 import realworld.mangjoo.user.port.out.RegistUserOutPort
+import java.util.*
 
 class Fixture {
     val fakeUser = LoginOutPort {
         User(
+            UUID.randomUUID(),
             UserAccount("mangjoo@naver.com", "A1234567#", "망주"),
             bio = "",
             image = null,
@@ -21,7 +23,7 @@ class Fixture {
         )
     }
 
-    val loginEmail:String = "wjwan0915@gmail.com"
+    val loginEmail: String = "wjwan0915@gmail.com"
 
     val fakeJwtCreateToken = JwtCreateTokenUseCase { "token" }
 //    val fakeCheckJwtToken = CheckJwtTokenUseCase { "wjwan0915@gmail.com" }
@@ -30,6 +32,7 @@ class Fixture {
 
     val fakeFindUserOutPort: FindUserOutPort = object : FindUserOutPort {
         override fun findByEmail(email: String): User = User(
+            UUID.randomUUID(),
             UserAccount(email, "A1234567#", "망주"),
             bio = "",
             image = null,

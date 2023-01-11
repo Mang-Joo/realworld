@@ -15,7 +15,8 @@ fun interface JwtCreateTokenUseCase {
         @Value("\${jwt.token.time}") val time: Long
     ) : JwtCreateTokenUseCase {
         private val now = Date()
-        override fun createToken(email: String): String = Jwts.builder()
+        override fun createToken(email: String): String =
+            Jwts.builder()
                 .setHeader(header(email))
                 .setClaims(body(email))
                 .setIssuedAt(now)
